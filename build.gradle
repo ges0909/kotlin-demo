@@ -1,5 +1,8 @@
 plugins {
+    // add support for Kotlin on the JVM
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    // dd support for building a CLI application
+    id 'application'
 }
 
 repositories {
@@ -20,3 +23,5 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+mainClassName = 'schrader.HelloWorldKt'
