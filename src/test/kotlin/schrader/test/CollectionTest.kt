@@ -52,7 +52,7 @@ class CollectionTest {
     }
 
     @Nested
-    inner class MapTest {
+    inner class PairTest {
 
         @Test fun pair() {
             val pair = 1 to "one"
@@ -60,12 +60,21 @@ class CollectionTest {
             assertThat(pair.second).isEqualTo("one")
         }
 
+        @Test fun pairWithPair() {
+            val pair = Pair(1, "one")
+            assertThat(pair.first).isEqualTo(1)
+            assertThat(pair.second).isEqualTo("one")
+        }
+    }
+
+    inner class MapTest {
+
         @Test fun mapOf() {
             val map = mapOf(1 to "one", 2 to "two", 3 to "three")
             assertThat(map[2]).isEqualTo("two") // map values can be accessed by their key
         }
 
-        @Test fun mapOfPAir() {
+        @Test fun mapOfPair() {
             val map = mapOf(Pair(1, "one"), Pair(2, "two"), Pair(3, "three"))
             assertThat(map[2]).isEqualTo("two")
         }

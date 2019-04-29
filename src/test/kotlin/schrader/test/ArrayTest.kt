@@ -9,5 +9,4 @@ class ArrayTest {
         val array = emptyArray<Int>()
         Assertions.assertThat(array).isEmpty()
     }
-
 }
