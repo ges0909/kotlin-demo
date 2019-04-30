@@ -38,21 +38,38 @@ class LanguageFeatureTest {
     }
 
     /**
-     * | n/a         | this  |  it  |
-     * |:------------|:-----:|:----:|
-     * | result      |  run  | let  |
-     * | side effect | apply | also |
-     *
+     * scope functions
      */
+
     @Nested
     inner class ScopeFunctionTest {
 
+        /**
+         * | n/a         | this  |  it  |
+         * |:------------|:-----:|:----:|
+         * | result      |  run  | let  |
+         * | side effect | apply | also |
+         *
+         */
+
         @Test fun run_() {
             val person = Person()
-            person.run {
-                val age = 35
-                this.age = age
+            val result = person.run {
+                this.age = 35
+                "The end." // 'run' returns last expression as result
             }
+            assertThat(person.age).isEqualTo(35)
+            assertThat(result).isEqualTo("The end.")
+        }
+
+        @Test fun let_() {
+            val person = Person()
+            val result = person.let {
+                it.age = 35
+                "The end." // 'let' returns last expression as result
+            }
+            assertThat(person.age).isEqualTo(35)
+            assertThat(result).isEqualTo("The end.")
         }
 
         @Test fun with_() {
@@ -74,12 +91,13 @@ class LanguageFeatureTest {
             assertThat(result).isEqualTo(person) // 'apply' returns the instance itself as result
         }
 
-        @Test fun let_() {
-
-        }
-
         @Test fun also_() {
-
+            val person = Person()
+            val result = person.also {
+                it.age = 35
+            }
+            assertThat(person.age).isEqualTo(35)
+            assertThat(result).isEqualTo(person) // 'apply' returns the instance itself as result
         }
     }
 }
