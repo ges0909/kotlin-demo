@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test
 
 class DataClassTest {
 
-    data class User(var name: String, val email: String, val country: String)
+    data class Person(val name: String = "Max", var age: Int = 30)
 
     @Test fun getter() {
-        val user = User("max", "max.mustermann@gmail.com", "de")
-        assertThat(user.name).isEqualTo("max")
-        assertThat(user.email).isEqualTo("max.mustermann@gmail.com")
-        assertThat(user.country).isEqualTo("de")
+        val person = Person()
+        assertThat(person.name).isEqualTo("Max")
+        assertThat(person.age).isEqualTo(30)
     }
 
     @Test fun setter() {
-        val user = User("max", "max.mustermann@gmail.com", "de")
-        user.name = "maximilian"
-        assertThat(user.name).isEqualTo("maximilian")
+        val person = Person()
+        person.age = 35
+        assertThat(person.age).isEqualTo(35)
     }
 }

@@ -6,8 +6,19 @@ import org.junit.jupiter.api.Test
 
 class CollectionTest {
 
+    data class Person(val name: String = "Max", var age: Int = 30)
+
     @Nested
     inner class ListTest { // inner classes are non-static nested classes
+
+        /**
+         * emptyList, listOf, mutableListOf
+         */
+
+        @Test fun emptyList() {
+            val list = emptyList<Int>()
+            assertThat(list).isEmpty()
+        }
 
         @Test fun listOf() {
             val list = listOf(1, 2, 3)
@@ -18,22 +29,54 @@ class CollectionTest {
             assertThat(list[1]).isEqualTo(2) // elements of a list can be accessed by their index
         }
 
-        @Test fun emptyList() {
-            val list = emptyList<Int>()
-            assertThat(list).isEmpty()
-        }
-
         @Test fun mutableListOf() {
             val list = mutableListOf(1, 2, 3)
             list[1] = 0
             assertThat(list[1]).isEqualTo(0)
         }
 
-        @Test fun filter() {
-            val list = listOf(1, 2, 3)
-            val filtered = list.filter { it % 2 == 0 }
-            assertThat(filtered).containsExactly(2)
+        /**
+         * filter, filterNot, filterIsInstance, filterNotNull
+         */
+
+        @Test fun filter_() {
+            val list = listOf(Person("Heike", 57), Person("Freddy", 30), Person("Vinzenz", 20))
+            val over30 = list.filter { it.age > 30 }
+            assertThat(over30).containsExactly(Person("Heike", 57))
         }
+
+        @Test fun filterNot() {
+            val list = listOf(Person("Heike", 57), Person("Freddy", 30), Person("Vinzenz", 20))
+            val notOver30 = list.filterNot { it.age > 30 }
+            assertThat(notOver30).containsExactly(Person("Freddy", 30), Person("Vinzenz", 20))
+        }
+
+        @Test fun filterIsInstance() {
+            val manyThings = listOf("Hello", 12, "World", 15.5, null, 500)
+            val onlyStrings = manyThings.filterIsInstance<String>()
+            assertThat(onlyStrings).containsExactly("Hello", "World")
+        }
+
+        @Test fun filterNotNull() {
+            val someNulls = listOf(null, "Hello", null, "World", null)
+            val notNulls = someNulls.filterNotNull()
+            assertThat(notNulls).containsExactly("Hello", "World")
+        }
+
+        /**
+         * filterTo, filterNotTo, filterIsInstanceTo, filterNotNullTo
+         */
+
+        @Test fun filterTo_() {
+            val list = mutableListOf(1, 2, 3, 4, 5)
+            val listToFilter = listOf(100, 300, 75, 6, 80, 7)
+            listToFilter.filterTo(list) { it < 10 }
+            assertThat(list).containsExactly(1, 2, 3, 4, 5, 6, 7)
+        }
+
+        /**
+         * getOrElse
+         */
 
         @Test fun getOrElse() {
             val list = listOf("one", "two")
@@ -67,6 +110,7 @@ class CollectionTest {
         }
     }
 
+    @Nested
     inner class MapTest {
 
         @Test fun mapOf() {

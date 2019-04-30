@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class LanguageFeatureTest {
 
-    data class User(var name: String = "max", val email: String = "max.mustermann@mail.com", val country: String = "de")
+    data class Person(val name: String = "Max", var age: Int = 30)
 
     @Test fun if_() {
         val x = (0..10).random()
@@ -37,35 +37,41 @@ class LanguageFeatureTest {
         assertThat(even(2)).isTrue()
     }
 
-
+    /**
+     * | n/a         | this  |  it  |
+     * |:------------|:-----:|:----:|
+     * | result      |  run  | let  |
+     * | side effect | apply | also |
+     *
+     */
     @Nested
     inner class ScopeFunctionTest {
 
         @Test fun run_() {
-            val user = User()
-            user.run  {
-                val n = "maximilian"
-                name = n
+            val person = Person()
+            person.run {
+                val age = 35
+                this.age = age
             }
         }
 
         @Test fun with_() {
-            val user = User()
-            val result = with(user) {
-                name = "maximilian"
+            val person = Person()
+            val result = with(person) {
+                age = 35
                 "The end." // 'with' returns last expression as result
             }
-            assertThat(user.name).isEqualTo("maximilian")
+            assertThat(person.age).isEqualTo(35)
             assertThat(result).isEqualTo("The end.")
         }
 
         @Test fun apply_() {
-            val user = User()
-            val result = user.apply {
-                name = "maximilian"
+            val person = Person()
+            val result = person.apply {
+                age = 35
             }
-            assertThat(user.name).isEqualTo("maximilian")
-            assertThat(result).isEqualTo(user) // 'apply' returns the instance itself as result
+            assertThat(person.age).isEqualTo(35)
+            assertThat(result).isEqualTo(person) // 'apply' returns the instance itself as result
         }
 
         @Test fun let_() {
