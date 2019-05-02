@@ -95,11 +95,50 @@ class CollectionTest {
         }
 
         /**
+         * any, all, none
+         */
+
+        @Test
+        fun any() {
+            val list = listOf(1, 2, 3)
+            assertThat(list.any { it < 2 }).isTrue() // true if at least one element matches predicate
+            assertThat(list.any { it > 3 }).isFalse()
+        }
+
+        @Test
+        fun all_() {
+            val list = listOf(1, 2, 3)
+            assertThat(list.all { it < 4 }).isTrue() // true if all elements matching predicate
+            assertThat(list.all { it > 1 }).isFalse()
+        }
+
+        @Test
+        fun none_() {
+            val list = listOf(1, 2, 3)
+            assertThat(list.none { it > 3 }).isTrue() // true if no element matches predicate
+            assertThat(list.none { it > 1 }).isFalse()
+        }
+
+        @Test
+        fun anyWithoutPredicate() {
+            val list = listOf(1, 2, 3)
+            val atLeastOne = list.any() // at least one element
+            assertThat(atLeastOne).isTrue()
+        }
+
+        @Test
+        fun noneWithoutPredicate() {
+            val list = listOf(1, 2, 3)
+            val isEmpty = list.none()
+            assertThat(isEmpty).isFalse()
+        }
+
+        /**
          * getOrElse
          */
 
         @Test
-        fun getOrElse() {
+        fun getOrElse_() {
             val list = listOf("one", "two")
             val missing = list.getOrElse(2) { "three" }
             assertThat(missing).isEqualTo("three")
