@@ -1,6 +1,7 @@
 package schrader.test
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class LanguageFeatureTest {
@@ -49,5 +50,17 @@ class LanguageFeatureTest {
 
     class Button : ActionListener {
         override fun click() = println("Button clicked")
+    }
+
+    @Nested
+    inner class Miscellaneous {
+
+        @JvmName("sortStrings")
+        fun sort(strings: List<String>) { // will be compiled to 'sort(strings: List)' because if type erasure
+        }
+
+        @JvmName("sortInts")
+        fun sort(ints: List<Int>) { // will be also compiled to 'sort(strings: List)' because if type erasure
+        }
     }
 }

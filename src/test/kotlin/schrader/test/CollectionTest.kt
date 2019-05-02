@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class CollectionTest {
 
-    data class Person(val name: String = "Max", var age: Int = 30)
+    private data class Person(val name: String = "Max", var age: Int = 30)
 
     @Nested
     inner class ListTest { // inner classes are non-static nested classes
@@ -80,6 +80,18 @@ class CollectionTest {
             val list = listOf(100, 300, 75, 6, 80, 7)
             list.filterTo(listTo) { it < 10 }
             assertThat(listTo).containsExactly(1, 2, 3, 4, 5, 6, 7)
+        }
+
+        @Test
+        fun min_() {
+            val min = listOf(1, 2, 3).min()
+            assertThat(min).isEqualTo(1)
+        }
+
+        @Test
+        fun max_() {
+            val max = listOf(1, 2, 3).max()
+            assertThat(max).isEqualTo(3)
         }
 
         /**
