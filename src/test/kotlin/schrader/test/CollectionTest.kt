@@ -193,6 +193,24 @@ class CollectionTest {
     inner class SequenceTest {
 
         @Test
+        fun stream() {
+            val persons = listOf(
+                    Person("Peter", 16),
+                    Person("Anna", 23),
+                    Person("Anna", 28),
+                    Person("Sonya", 39)
+            )
+            val names = persons
+                    .asSequence()
+                    .filter { it.age > 18 }
+                    .map { it.name }
+                    .distinct()
+                    .sorted()
+                    .toList()
+            assertThat(names).containsExactly("Anna", "Sonya")
+        }
+
+        @Test
         fun generateSequence() {
             val seq = generateSequence(1, { it + 1 }) // sequences represent lazily-evaluated collections
             val list = seq.take(3).toList()
