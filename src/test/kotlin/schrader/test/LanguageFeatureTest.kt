@@ -40,6 +40,20 @@ class LanguageFeatureTest {
     }
 
     @Test
+    fun takeIf_() {
+        fun getRandom() = (0..9).random()
+        getRandom().takeIf { it < 5 }
+                ?.let { assertThat(it).isBetween(0, 4) }
+    }
+
+    @Test
+    fun takeUnless_() {
+        fun getRandom() = (0..9).random()
+        getRandom().takeUnless { it < 5 }
+                ?.let { assertThat(it).isBetween(5, 9) }
+    }
+
+    @Test
     fun click() {
         Button().click()
     }
