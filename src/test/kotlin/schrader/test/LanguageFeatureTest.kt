@@ -1,7 +1,6 @@
 package schrader.test
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class LanguageFeatureTest {
@@ -27,8 +26,8 @@ class LanguageFeatureTest {
     @Test
     fun for_() {
         val array = arrayOf(1, 2, 3)
-        for ((index, value) in array.withIndex()) {
-            assertThat(index).isEqualTo(value - 1)
+        for ((i, v) in array.withIndex()) {
+            assertThat(i).isEqualTo(v - 1)
         }
     }
 
@@ -54,27 +53,17 @@ class LanguageFeatureTest {
     }
 
     @Test
-    fun click() {
-        Button().click()
-    }
-
-    interface ActionListener {
-        fun click()
-    }
-
-    class Button : ActionListener {
-        override fun click() = println("Button clicked")
-    }
-
-    @Nested
-    inner class Miscellaneous {
-
-        @JvmName("sortStrings")
-        fun sort(strings: List<String>) { // will be compiled to 'sort(strings: List)' because if type erasure
+    fun partialFunction() {
+        // partial function cannot be executed for some values
+        fun func(name: String): Result {
+            if (name.isNotEmpty()) return Success()
+            return Failure()
         }
-
-        @JvmName("sortInts")
-        fun sort(ints: List<Int>) { // will be also compiled to 'sort(strings: List)' because if type erasure
-        }
+        assertThat(func("non empty")).isEqualToComparingFieldByFieldRecursively(Success())
+        assertThat(func("")).isEqualToComparingFieldByFieldRecursively(Failure())
     }
 }
+
+sealed class Result(val text: String, val isFailed: Boolean)
+class Success(text: String = "") : Result("Success: {$text}", false)
+class Failure(text: String = "") : Result("Failure: {$text}", true)

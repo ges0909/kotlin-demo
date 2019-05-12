@@ -7,8 +7,8 @@ class ArrayTest {
 
     @Test
     fun emptyArray_() {
-        val array = emptyArray<Int>()
-        assertThat(array).isEmpty()
+        val empty = emptyArray<Int>()
+        assertThat(empty).isEmpty()
     }
 
     @Test
