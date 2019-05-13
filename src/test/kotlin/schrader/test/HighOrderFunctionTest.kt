@@ -13,14 +13,12 @@ class HighOrderFunctionTest {
         return f(a, b)
     }
 
-    @Test
-    fun test() {
+    @Test fun test() {
         val r = highOrder(1, 2) { x, y -> x + y }
         assertThat(r).isEqualTo(3)
     }
 
-    @Test
-    fun test2() {
+    @Test fun test2() {
         val r = highOrder("Some", "thing") { x, y -> x + y }
         assertThat(r).isEqualTo("Something")
     }
