@@ -11,8 +11,7 @@ private val Int.BD: BigDecimal
 
 class DelegationTest {
 
-    @Test
-    fun delegatedProperties() {
+    @Test fun delegatedProperties() {
         val bd = 10.BD
         assertThat(bd).isEqualTo(10.BD)
     }

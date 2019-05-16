@@ -15,8 +15,7 @@ class ScopeFunctionTest {
 
     private data class Person(val name: String = "Max", var age: Int = 30)
 
-    @Test
-    fun run_() {
+    @Test fun run_() {
         val person = Person()
         val result = person.run {
             this.age = 35
@@ -26,8 +25,7 @@ class ScopeFunctionTest {
         assertThat(result).isEqualTo("The end.")
     }
 
-    @Test
-    fun let_() {
+    @Test fun let_() {
         val person = Person()
         val result = person.let {
             it.age = 35
@@ -37,8 +35,7 @@ class ScopeFunctionTest {
         assertThat(result).isEqualTo("The end.")
     }
 
-    @Test
-    fun with_() {
+    @Test fun with_() {
         val person = Person()
         val result = with(person) {
             age = 35
@@ -48,8 +45,7 @@ class ScopeFunctionTest {
         assertThat(result).isEqualTo("The end.")
     }
 
-    @Test
-    fun apply_() {
+    @Test fun apply_() {
         val person = Person()
         val result = person.apply {
             age = 35
@@ -62,8 +58,7 @@ class ScopeFunctionTest {
         // to use this in a larger expression without being forced to introduce needless auxiliary variables.
     }
 
-    @Test
-    fun also_() {
+    @Test fun also_() {
         val person = Person()
         val result = person.also {
             it.age = 35

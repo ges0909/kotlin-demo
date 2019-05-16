@@ -15,14 +15,12 @@ class CollectionTest {
          * emptyList, listOf, mutableListOf
          */
 
-        @Test
-        fun emptyList() {
+        @Test fun emptyList() {
             val list = emptyList<Int>()
             assertThat(list).isEmpty()
         }
 
-        @Test
-        fun listOf() {
+        @Test fun listOf() {
             val list = listOf(1, 2, 3)
             assertThat(list).isNotEmpty
             assertThat(list.size).isEqualTo(3)
@@ -31,8 +29,7 @@ class CollectionTest {
             assertThat(list[1]).isEqualTo(2) // elements of a list can be accessed by their index
         }
 
-        @Test
-        fun mutableListOf() {
+        @Test fun mutableListOf() {
             val list = mutableListOf(1, 2, 3)
             list[1] = 0
             assertThat(list[1]).isEqualTo(0)
@@ -42,29 +39,25 @@ class CollectionTest {
          * filter, filterNot, filterIsInstance, filterNotNull
          */
 
-        @Test
-        fun filter_() {
+        @Test fun filter_() {
             val list = listOf(Person("Heike", 57), Person("Freddy", 30), Person("Vinz", 20))
             val over30 = list.filter { it.age > 30 }
             assertThat(over30).containsExactly(Person("Heike", 57))
         }
 
-        @Test
-        fun filterNot() {
+        @Test fun filterNot() {
             val list = listOf(Person("Heike", 57), Person("Freddy", 30), Person("Vinz", 20))
             val notOver30 = list.filterNot { it.age > 30 }
             assertThat(notOver30).containsExactly(Person("Freddy", 30), Person("Vinz", 20))
         }
 
-        @Test
-        fun filterIsInstance() {
+        @Test fun filterIsInstance() {
             val instances = listOf("Hello", 12, "World", 15.5, null, 500)
             val stringsOnly = instances.filterIsInstance<String>()
             assertThat(stringsOnly).containsExactly("Hello", "World")
         }
 
-        @Test
-        fun filterNotNull() {
+        @Test fun filterNotNull() {
             val nulls = listOf(null, "Hello", null, "World", null)
             val notNulls = nulls.filterNotNull()
             assertThat(notNulls).containsExactly("Hello", "World")
@@ -74,22 +67,19 @@ class CollectionTest {
          * filterTo, filterNotTo, filterIsInstanceTo, filterNotNullTo
          */
 
-        @Test
-        fun filterTo_() {
+        @Test fun filterTo_() {
             val listTo = mutableListOf(1, 2, 3, 4, 5)
             val list = listOf(100, 300, 75, 6, 80, 7)
             list.filterTo(listTo) { it < 10 }
             assertThat(listTo).containsExactly(1, 2, 3, 4, 5, 6, 7)
         }
 
-        @Test
-        fun min_() {
+        @Test fun min_() {
             val min = listOf(1, 2, 3).min()
             assertThat(min).isEqualTo(1)
         }
 
-        @Test
-        fun max_() {
+        @Test fun max_() {
             val max = listOf(1, 2, 3).max()
             assertThat(max).isEqualTo(3)
         }
@@ -98,36 +88,31 @@ class CollectionTest {
          * any, all, none
          */
 
-        @Test
-        fun any() {
+        @Test fun any() {
             val list = listOf(1, 2, 3)
             assertThat(list.any { it < 2 }).isTrue() // true if at least one element matches predicate
             assertThat(list.any { it > 3 }).isFalse()
         }
 
-        @Test
-        fun all_() {
+        @Test fun all_() {
             val list = listOf(1, 2, 3)
             assertThat(list.all { it < 4 }).isTrue() // true if all elements matching predicate
             assertThat(list.all { it > 1 }).isFalse()
         }
 
-        @Test
-        fun none_() {
+        @Test fun none_() {
             val list = listOf(1, 2, 3)
             assertThat(list.none { it > 3 }).isTrue() // true if no element matches predicate
             assertThat(list.none { it > 1 }).isFalse()
         }
 
-        @Test
-        fun anyWithoutPredicate() {
+        @Test fun anyWithoutPredicate() {
             val list = listOf(1, 2, 3)
             val atLeastOne = list.any() // at least one element
             assertThat(atLeastOne).isTrue()
         }
 
-        @Test
-        fun noneWithoutPredicate() {
+        @Test fun noneWithoutPredicate() {
             val list = listOf(1, 2, 3)
             val isEmpty = list.none()
             assertThat(isEmpty).isFalse()
@@ -137,8 +122,7 @@ class CollectionTest {
          * getOrElse
          */
 
-        @Test
-        fun getOrElse_() {
+        @Test fun getOrElse_() {
             val list = listOf("one", "two")
             val missing = list.getOrElse(2) { "three" }
             assertThat(missing).isEqualTo("three")
@@ -148,8 +132,7 @@ class CollectionTest {
     @Nested
     inner class SetTest {
 
-        @Test
-        fun setOf() {
+        @Test fun setOf() {
             val set = setOf(1, 2, 3)
             assertThat(set).containsExactly(1, 2, 3)
         }
@@ -158,15 +141,13 @@ class CollectionTest {
     @Nested
     inner class PairTest {
 
-        @Test
-        fun pair() {
+        @Test fun pair() {
             val pair = 1 to "one"
             assertThat(pair.first).isEqualTo(1)
             assertThat(pair.second).isEqualTo("one")
         }
 
-        @Test
-        fun pairWithPair() {
+        @Test fun pairWithPair() {
             val pair = Pair(1, "one")
             assertThat(pair.first).isEqualTo(1)
             assertThat(pair.second).isEqualTo("one")
@@ -176,14 +157,12 @@ class CollectionTest {
     @Nested
     inner class MapTest {
 
-        @Test
-        fun mapOf() {
+        @Test fun mapOf() {
             val map = mapOf(1 to "one", 2 to "two", 3 to "three")
             assertThat(map[2]).isEqualTo("two") // map values can be accessed by their key
         }
 
-        @Test
-        fun mapOfPair() {
+        @Test fun mapOfPair() {
             val map = mapOf(Pair(1, "one"), Pair(2, "two"), Pair(3, "three"))
             assertThat(map[2]).isEqualTo("two")
         }
@@ -192,8 +171,7 @@ class CollectionTest {
     @Nested
     inner class SequenceTest {
 
-        @Test
-        fun stream() {
+        @Test fun stream() {
             val persons = listOf(
                     Person("Peter", 16),
                     Person("Anna", 23),
@@ -210,15 +188,13 @@ class CollectionTest {
             assertThat(names).containsExactly("Anna", "Sonya")
         }
 
-        @Test
-        fun generateSequence() {
+        @Test fun generateSequence() {
             val seq = generateSequence(1, { it + 1 }) // sequences represent lazily-evaluated collections
             val list = seq.take(3).toList()
             assertThat(list).containsExactly(1, 2, 3)
         }
 
-        @Test
-        fun fibonacci() {
+        @Test fun fibonacci() {
             val list = fibonacciSequence().take(10).toList()
             assertThat(list).isEqualTo(listOf(1, 1, 2, 3, 5, 8, 13, 21, 34, 55))
         }
