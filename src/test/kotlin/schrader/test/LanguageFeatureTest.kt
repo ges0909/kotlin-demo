@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test
 
 class LanguageFeatureTest {
 
-    @Test fun if_() {
+    @Test fun `if expression`() {
         val x = (0..10).random()
         val sign = if (x < 0) "negative" else "positive"
         assertThat(sign).isEqualTo("positive")
     }
 
-    @Test fun when_() {
+    @Test fun `when expression`() {
         val pair = when (val n: Any = 2) {
             is Number -> n to "Number"
             is String -> n to "String"
@@ -21,17 +21,24 @@ class LanguageFeatureTest {
         assertThat(pair.second).isEqualTo("Number")
     }
 
-    @Test fun for_() {
+    @Test fun `for loop`() {
         val array = arrayOf(1, 2, 3)
         for ((i, v) in array.withIndex()) {
             assertThat(i).isEqualTo(v - 1)
         }
     }
 
-    @Test fun singleExpressionFunction() {
+    @Test fun `single expression function`() {
         fun even(v: Int) = v % 2 == 0 // 'return' not allowed
         assertThat(even(1)).isFalse()
         assertThat(even(2)).isTrue()
+    }
+
+    @Test fun `lazy initialization`() {
+        val lazyInitialized: String by lazy {
+            "Initialized when accessed first time"
+        }
+        assertThat(lazyInitialized).isEqualTo("Initialized when accessed first time")
     }
 
     @Test fun takeIf_() {
