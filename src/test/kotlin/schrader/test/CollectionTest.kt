@@ -1,12 +1,13 @@
 package schrader.test
 
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class CollectionTest {
 
-    private data class Person(val name: String = "Max", var age: Int = 30)
+    data class Person(val name: String, var age: Int)
 
     @Nested
     inner class ListTest { // inner classes are non-static nested classes
@@ -168,47 +169,20 @@ class CollectionTest {
         }
     }
 
-    @Nested
-    inner class SequenceTest {
-
-        @Test fun stream() {
-            val persons = listOf(
-                    Person("Peter", 16),
-                    Person("Anna", 23),
-                    Person("Anna", 28),
-                    Person("Sonya", 39)
-            )
-            val names = persons
-                    .asSequence()
-                    .filter { it.age > 18 }
-                    .map { it.name }
-                    .distinct()
-                    .sorted()
-                    .toList()
-            assertThat(names).containsExactly("Anna", "Sonya")
-        }
-
-        @Test fun generateSequence() {
-            val seq = generateSequence(1, { it + 1 }) // sequences represent lazily-evaluated collections
-            val list = seq.take(3).toList()
-            assertThat(list).containsExactly(1, 2, 3)
-        }
-
-        @Test fun fibonacci() {
-            val list = fibonacciSequence().take(10).toList()
-            assertThat(list).isEqualTo(listOf(1, 1, 2, 3, 5, 8, 13, 21, 34, 55))
-        }
-
-        private fun fibonacciSequence(): Sequence<Int> {
-            var a = 0
-            var b = 1
-            fun next(): Int {
-                val result = a + b
-                a = b
-                b = result
-                return a
-            }
-            return generateSequence(::next)
-        }
+    @Test fun asSequence_() {
+        val persons = listOf(
+                Person("Peter", 16),
+                Person("Anna", 23),
+                Person("Anna", 28),
+                Person("Sonya", 39)
+        )
+        val names = persons
+                .asSequence()
+                .filter { it.age > 18 }
+                .map { it.name }
+                .distinct()
+                .sorted()
+                .toList()
+        Assertions.assertThat(names).containsExactly("Anna", "Sonya")
     }
 }
